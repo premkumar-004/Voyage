@@ -7,6 +7,7 @@ const path = require("path");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
 main().then((res) => {
     console.log("Connected to DB");
@@ -34,6 +35,13 @@ async function main() {
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
     res.render("./listings/index.ejs", { allListings });
+})
+
+//show route
+app.get("/listings/:id", async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("./listings/show.ejs", { listing });
 })
 
 app.listen(8080, () => {
