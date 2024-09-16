@@ -4,10 +4,12 @@ const mongoose = require("mongoose");
 const MONGO_URL = 'mongodb://127.0.0.1:27017/voyage';
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 main().then((res) => {
     console.log("Connected to DB");
@@ -56,6 +58,19 @@ app.post("/listings", async (req, res) => {
     res.redirect("/listings");
 })
 
+//Edit Update Route
+app.get("/listings/:id/edit", async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("./listings/edit.ejs", { listing });
+})
+
+//update route
+app.put("/listings/:id", async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    res.redirect(`/listings/${id}`);
+})
 
 app.listen(8080, () => {
     console.log("Listening on port no. 8080");
