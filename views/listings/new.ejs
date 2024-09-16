@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage</title>
+</head>
+
+<body>
+    <form action="/listings" method="post">
+        <input type="text" placeholder="Enter title" name="listing[title]">
+        <br>
+        <textarea type="text" placeholder="Enter description" name="listing[description]"></textarea>
+        <br>
+        <input type="text" placeholder="Enter image URL/Link" name="listing[image]">
+        <br>
+        <input type="number" placeholder="Enter price" name="listing[price]">
+        <br>
+        <input type="text" placeholder="Enter location" name="listing[location]">
+        <br>
+        <button type="submit">Add</button>
+    </form>
+</body>
+
+</html>
