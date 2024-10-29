@@ -23,19 +23,6 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
-// app.get("/testListing", async (req, res) => {
-//     let sampleListing = new Listing({
-//         title: "My new villa",
-//         description: "By the beach",
-//         price: 1200,
-//         location: "Hyderabad",
-//         country: "India",
-//     });
-//     await sampleListing.save();
-//     console.log("Sample was Saved");
-//     res.send("Successful");
-// })
-
 //Index Route
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
