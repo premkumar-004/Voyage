@@ -9,10 +9,13 @@
                         <label for="title" class="form-label">Title</label>
                         <input type="text" placeholder="Add a catchy title" name="listing[title]" class="form-control"
                             required>
+                        <div class="valid-feedback">Title looks good &#128512; !</div>
+                        <div class="invalid-feedback">Title required</div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea type="text" name="listing[description]" class="form-control" required></textarea>
+                        <div class="invalid-feedback">Description cannot be empty</div>
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
@@ -22,19 +25,21 @@
                     <div class="row">
                         <div class="mb-3 col-md-4">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" placeholder="1,200" name="listing[price]" class="form-control"
-                                required>
+                            <input placeholder="1,200" name="listing[price]" class="form-control" required>
+                            <div class="invalid-feedback">Please enter a valid price </div>
                         </div>
                         <div class="mb-3 col-md-8">
                             <label for="country" class="form-label">Country</label>
                             <input type="text" placeholder="India" name="listing[country]" class="form-control"
                                 required>
+                            <div class="invalid-feedback">Country Name Required</div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
                         <input type="text" placeholder="Hyderabad,Telangana" name="listing[location]"
                             class="form-control" required>
+                        <div class="invalid-feedback">Location Required</div>
                     </div>
                     <button type="submit" class="btn btn-dark mb-3 mt-3 add-btn">Add</button>
                 </form>
