@@ -23,6 +23,13 @@ const listingSchema = new Schema({
     ]
 });
 
+//Mongoose post middleware to delete the reviews from DB after deleting a listing
+listingSchema.post("findOneAndDelete", async (listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
+    }
+})
+
 const Listing = mongoose.model("Listing", listingSchema);
 
 module.exports = Listing;
