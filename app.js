@@ -9,6 +9,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -37,6 +38,12 @@ const sessionOptions = {
     },
 }
 app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    next();
+})
 
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
@@ -48,6 +55,7 @@ app.all("*", (req, res, next) => {
 //Middleware 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Page Not Found" } = err;
+    console.log(err);
     res.status(statusCode).render("error.ejs", { message });
     // res.status(statusCode).send(message);
 })

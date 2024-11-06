@@ -7,8 +7,10 @@ const Listing = require("../models/listing.js");
 
 
 const validateListing = (req, res, next) => {
+    console.log(req.body);
     let { error } = listingSchema.validate(req.body);
-    let errMsg = error.details.map((el) => el.message).join(",");
+    let errMsg = "Some error occured";
+    // errMsg = error.details.map((el) => el.message).join(",");]
     if (error) {
         throw new ExpressError(400, errMsg);
     } else {
@@ -38,6 +40,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 router.post("/", validateListing, wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("success", "New Listing Created");
     res.redirect("/listings");
 }));
 
