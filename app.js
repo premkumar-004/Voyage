@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+const session = require("express-session");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -25,10 +26,20 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
+const sessionOptions = {
+    secret: "mysupersecretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    },
+}
+app.use(session(sessionOptions));
 
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
-
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not found"));
