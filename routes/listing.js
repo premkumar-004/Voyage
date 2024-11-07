@@ -7,7 +7,6 @@ const Listing = require("../models/listing.js");
 
 
 const validateListing = (req, res, next) => {
-    console.log(req.body);
     let { error } = listingSchema.validate(req.body);
     let errMsg = "Some error occured";
     // errMsg = error.details.map((el) => el.message).join(",");]
@@ -56,6 +55,7 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 router.put("/:id", validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    req.flash("success", "Updated Listing Successfully");
     res.redirect(`/listings/${id}`);
 }))
 
@@ -64,6 +64,7 @@ router.put("/:id", validateListing, wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "Listing Deleted");
     res.redirect("/listings");
 }))
 
