@@ -53,11 +53,11 @@ router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res, next) =
 //Edit Update Route
 router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
+    const listing = await Listing.findById(id);
     if (!listing) {
         req.flash("error", "Listing Donot Exists!");
         res.redirect("/listings");
     }
-    const listing = await Listing.findById(id);
     res.render("./listings/edit.ejs", { listing });
 }))
 
