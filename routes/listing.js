@@ -14,11 +14,7 @@ const upload = multer({ storage });
 //create route
 router.route("/")
     .get(wrapAsync(listingController.index))
-    // .post(isLoggedIn, validateListing, wrapAsync(listingController.createListing));
-    .post(upload.single('listing[image]'), (req, res) => {
-        res.send(req.file);
-    });
-
+    .post(isLoggedIn, upload.single('listing[image]'), validateListing, wrapAsync(listingController.createListing));
 //New create route
 //Put above /:id other wise /new will be treated as an id and this route will not work
 router.get("/new", isLoggedIn, listingController.renderNewForm);
